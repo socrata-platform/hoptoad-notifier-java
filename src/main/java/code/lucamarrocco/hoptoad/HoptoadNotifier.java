@@ -16,8 +16,9 @@ public class HoptoadNotifier implements HoptoadNotify {
 		connection.setRequestMethod("POST");
 	}
 
-	private HttpURLConnection createConnection() throws IOException, MalformedURLException {
-		final HttpURLConnection connection = (HttpURLConnection) new URL("http://hoptoadapp.com/notifier_api/v2/notices").openConnection();
+	private HttpURLConnection createConnection(boolean ssl) throws IOException, MalformedURLException {
+		final HttpURLConnection connection = (HttpURLConnection) new URL(
+        (ssl ? "http" : "https") + "://hoptoadapp.com/notifier_api/v2/notices").openConnection();
 		return connection;
 	}
 
@@ -26,9 +27,9 @@ public class HoptoadNotifier implements HoptoadNotify {
 		e.printStackTrace();
 	}
 
-	public int notify(final HoptoadNotice notice) {
+	public int notify(final HoptoadNotice notice, final boolean ssl) {
 		try {
-			final HttpURLConnection toHoptoad = createConnection();
+			final HttpURLConnection toHoptoad = createConnection(ssl);
 			addingProperties(toHoptoad);
 			return send(new NoticeApi2(notice).toString(), toHoptoad);
 		} catch (final Exception e) {

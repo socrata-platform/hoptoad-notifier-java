@@ -16,6 +16,8 @@ public class HoptoadAppender extends AppenderSkeleton {
 
 	private boolean enabled;
 
+  private boolean ssl;
+
 	private Backtrace backtrace = new QuietRubyBacktrace();
 
 	public HoptoadAppender() {
@@ -48,7 +50,7 @@ public class HoptoadAppender extends AppenderSkeleton {
 	}
 
 	private int notifyThrowableIn(final LoggingEvent loggingEvent) {
-		return hoptoadNotifier.notify(newNoticeFor(throwable(loggingEvent)));
+		return hoptoadNotifier.notify(newNoticeFor(throwable(loggingEvent)), ssl);
 	}
 
 	@Override
@@ -71,6 +73,10 @@ public class HoptoadAppender extends AppenderSkeleton {
 	public void setEnv(final String env) {
 		this.env = env;
 	}
+
+  public void setSsl(final boolean ssl) {
+    this.ssl = ssl;
+  }
 
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
 		return loggingEvent.getThrowableInformation() != null;
