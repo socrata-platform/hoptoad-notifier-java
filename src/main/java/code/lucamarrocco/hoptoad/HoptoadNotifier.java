@@ -18,7 +18,7 @@ public class HoptoadNotifier implements HoptoadNotify {
 
 	private HttpURLConnection createConnection(boolean ssl) throws IOException, MalformedURLException {
 		final HttpURLConnection connection = (HttpURLConnection) new URL(
-        (ssl ? "http" : "https") + "://hoptoadapp.com/notifier_api/v2/notices").openConnection();
+        (ssl ? "https" : "http") + "://hoptoadapp.com/notifier_api/v2/notices").openConnection();
 		return connection;
 	}
 
